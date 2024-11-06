@@ -12,7 +12,7 @@ import PDFView from 'react-native-pdf';
 const MainApp = () => {
   const [openPdf, setOpenPdf] = React.useState(false);
   const source = {
-    uri: 'https://ucd.ie/t4cms/Test%20PDF-8mb.pdf',
+    uri: 'https://www.antennahouse.com/hubfs/xsl-fo-sample/pdf/basic-link-1.pdf',
     cache: false,
     Headers: {'Cache-Control': 'no-cache'},
   };
