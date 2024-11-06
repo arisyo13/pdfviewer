@@ -1,26 +1,46 @@
 import React from 'react';
-import { Button, Dimensions, Linking, StyleSheet, Text, View } from 'react-native';
+import {
+  Button,
+  Dimensions,
+  Linking,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import PDFView from 'react-native-pdf';
 
 const MainApp = () => {
   const [openPdf, setOpenPdf] = React.useState(false);
-  const source = { uri: 'https://www.adobe.com/support/products/enterprise/knowledgecenter/media/c4611_sample_explain.pdf', cache: false };
+  const source = {
+    uri: 'https://ucd.ie/t4cms/Test%20PDF-8mb.pdf',
+    cache: false,
+    Headers: {'Cache-Control': 'no-cache'},
+  };
+
   return (
     <View style={styles.container}>
-      <Button title={`${!openPdf ? 'Open' : 'Close'} pdf`} onPress={() => setOpenPdf(!openPdf)} />
+      <Button
+        title={`${!openPdf ? 'Open' : 'Close'} pdf`}
+        onPress={() => setOpenPdf(!openPdf)}
+      />
       <Text>PDF</Text>
-      {openPdf && <PDFView
-        // trustAllCerts={true}
-        onError={(error) => console.log('pdf view error', error)}
-        onPressLink={(uri) => {
-          Linking.openURL(uri);
-        }}
-        onLoadComplete={(numberOfPages, filePath) => {
-          console.log(`number of pages: ${numberOfPages}`, filePath);
-        }}
-        source={source}
-        style={styles.fullsizePdf}
-      />}
+      {openPdf && (
+        <PDFView
+          trustAllCerts={false}
+          onError={error => console.log('pdf view error', error)}
+          onPressLink={uri => {
+            Linking.openURL(uri);
+          }}
+          onLoadProgress={(percent: number) => {
+            console.log(`progress: ${percent}%`);
+          }}
+          onLoadComplete={(numberOfPages, filePath) => {
+            console.log(`number of pages: ${numberOfPages}`, filePath);
+          }}
+          source={source}
+          style={styles.fullsizePdf}
+        />
+      )}
     </View>
   );
 };
